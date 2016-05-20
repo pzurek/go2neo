@@ -1,6 +1,8 @@
 language: go
 go: 
   - 1.6
+jdk:
+  - oraclejdk8
   
 env:
   - NEO_VERSION="3.0.0"
@@ -15,7 +17,6 @@ after_success:
   - goveralls -coverprofile=cover.out
   
 before_install:
-  - jdk_switcher use oraclejdk8
   - wget dist.neo4j.org/neo4j-community-$NEO_VERSION-unix.tar.gz
   - tar -xzf neo4j-community-$NEO_VERSION-unix.tar.gz
   - echo "org.neo4j.server.transaction.timeout=1" >> neo4j-community-$NEO_VERSION/conf/neo4j-server.properties
