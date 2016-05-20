@@ -4,7 +4,21 @@ This repository aims at becoming a Go database driver for Neo4j 3.0.0+. For easi
 
 To get in touch, please contact [Sanja Bonic](mailto:sanja@go2neo.org) or [Nigel Small](mailto:nigel@go2neo.org).
 
-## How To Run
+## How To Run The Server
+```
+$ wget http://dist.neo4j.org/neo4j-community-3.0.0-unix.tar.gz
+$ tar xf neo4j-community-3.0.0-unix.tar.gz
+$ cd neo4j-community-3.0.0
+$ bin/neo4j start
+Starting Neo4j.
+Started neo4j (pid 3456). By default, it is available at http://localhost:7474/
+There may be a short delay until the server is ready.
+See /home/nigel/opt/neo4j-community-3.0.0/logs/neo4j.log for current status.
+```
+
+Note that there will generally be a delay (10-15 seconds) before the server port becomes available.
+
+## How To Run The Client
 In general, for quick development testing, you can navigate to the specific folder in your terminal and test the file via `go run <filename>.go`. Assuming your `GOPATH` is set, you can install custom packages by executing `go install <packagename>`.
 
 For example, to run `main.go` from a shell, you might use:
