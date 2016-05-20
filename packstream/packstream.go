@@ -1,7 +1,6 @@
 package packstream
 
-import (
-)
+import ()
 
 type ByteStructures struct {
 	typeCode uint8
@@ -13,5 +12,5 @@ func Pack(findType interface{}) {
 }
 
 func Unpack(byteStream []byte) interface{} {
-
+	return nil
 }
