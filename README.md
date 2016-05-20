@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/nigelsmall/go2neo.svg?branch=master)](https://travis-ci.org/nigelsmall/go2neo)
+[![Coverage Status](https://coveralls.io/repos/github/nigelsmall/go2neo/badge.svg?branch=master)](https://coveralls.io/github/nigelsmall/go2neo?branch=master)
+
 # Neo4j Bolt Driver for Go
 
 This repository aims at becoming a Go database driver for Neo4j 3.0.0+. For easier picking up, tasks will be defined via GitHub issues. Please submit a pull request if you are confident that you solved an issue, ideally including some testing.
