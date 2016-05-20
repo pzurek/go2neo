@@ -1,8 +1,6 @@
 package packstream
 
 import (
-	"bytes"
-	"fmt"
 )
 
 type ByteStructures struct {
