@@ -1,4 +1,4 @@
-package graphdatabase
+package go2neo
 
 import (
 )
