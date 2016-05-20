@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-  driver := graphdatabase.Driver("127.0.0.1:7687")
+  driver, _ := graphdatabase.Driver("127.0.0.1:7687")
   fmt.Println("Handshake complete, using Bolt version", driver.BoltVersion)
 }
