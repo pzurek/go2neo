@@ -2,7 +2,7 @@
 
 This repository aims at becoming a Go database driver for Neo4j 3.0.0+. For easier picking up, tasks will be defined via GitHub issues. Please submit a pull request if you are confident that you solved an issue, ideally including some testing.
 
-To get in touch, please contact [Sanja Bonic](sanja@go2neo.org) or [Nigel Small](mailto:nigel@go2neo.org).
+To get in touch, please contact [Sanja Bonic](mailto:sanja@go2neo.org) or [Nigel Small](mailto:nigel@go2neo.org).
 
 ## How To Run
 In general, for quick development testing, you can navigate to the specific folder in your terminal and test the file via `go run <filename>.go`. Assuming your `GOPATH` is set, you can install custom packages by executing `go install <packagename>`.
