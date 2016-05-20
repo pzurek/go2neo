@@ -1,9 +1,12 @@
 package main
 
 import (
-  "github.com/nigelsmall/go2neo/bolt"
+  "fmt"
+
+  "github.com/nigelsmall/go2neo/graphdatabase"
 )
 
 func main() {
-  bolt.ConnectTCP()
+  driver := graphdatabase.Driver("127.0.0.1:7687")
+  fmt.Println("Handshake complete, using Bolt version", driver.BoltVersion)
 }
