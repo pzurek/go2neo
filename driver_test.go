@@ -18,5 +18,5 @@ func Test(t *testing.T) {
 func (s *driverSuite) TestBoltHandshake(c *C) {
 	driver, err := Driver("127.0.0.1:7687")
 	c.Assert(err, IsNil)
-	c.Assert(driver.BoltVersion, Equals, 1)
+	c.Assert(driver.BoltVersion, Equals, uint(1))
 }
