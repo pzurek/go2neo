@@ -1,8 +1,7 @@
 package go2neo
 
-import (
-)
+import ()
 
 func ReadBytes() interface{} {
-    return nil
+	return nil
 }

@@ -1,13 +1,10 @@
 package packstream
 
-import (
-  "bytes"
-  "fmt"
-)
+import ()
 
 type ByteStructures struct {
-  typeCode uint8
-  size int
+	typeCode uint8
+	size     int
 }
 
 func Pack(findType interface{}) {
@@ -15,5 +12,5 @@ func Pack(findType interface{}) {
 }
 
 func Unpack(byteStream []byte) interface{} {
-
+	return nil
 }
