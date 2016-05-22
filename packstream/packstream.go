@@ -44,7 +44,6 @@ const (
 	TRUE     = 0xC3
 
 	MIN_TINY_INT = -16
-	MAX_TINY_INT = 127
 	INT_8        = 0xC8
 	INT_16       = 0xC9
 	INT_32       = 0xCA
@@ -74,7 +73,7 @@ func (dec Decoder) Decode() (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	if int8(b) >= MIN_TINY_INT && int8(b) <= MAX_TINY_INT {
+	if int8(b) >= MIN_TINY_INT && int8(b) <= math.MaxInt8 {
 		return int(int8(b)), nil
 	}
 	switch b {
@@ -194,7 +193,7 @@ func (enc Encoder) encodeFloat64(f float64) error {
 
 func (enc Encoder) encodeInt64(i int64) error {
 	switch {
-	case (i >= -9223372036854775808 && i <= -2147483649) || (i >= 2147483648 && i <= 9223372036854775807): // INT_64
+	case (i >= math.MinInt64 && i < math.MinInt32) || (i > math.MaxInt32 && i <= math.MaxInt64): // INT_64
 		b := [9]byte{}
 		b[0] = INT_64
 		b[1] = byte(i >> 56)
@@ -214,20 +213,20 @@ func (enc Encoder) encodeInt64(i int64) error {
 		}
 		enc.bw.Flush()
 		return err
-	case (i >= -2147483648 && i <= -32769) || (i >= 32768 && i <= 2147483647): // INT_32
+	case (i >= math.MinInt32 && i < math.MinInt16) || (i > math.MaxInt16 && i <= math.MaxInt32): // INT_32
 		return enc.encodeInt32(int(i))
-	case (i >= -32768 && i <= -129) || (i >= 128 && i <= 32767): // INT_16
+	case (i >= math.MinInt16 && i < math.MinInt8) || (i > math.MaxInt8 && i <= math.MaxInt16): // INT_16
 		return enc.encodeInt16(int(i))
-	case i >= -128 && i <= -17: // INT_8
+	case i >= math.MinInt8 && i < MIN_TINY_INT: // INT_8
 		return enc.encodeInt8(int(i))
-	case i >= MIN_TINY_INT && i <= MAX_TINY_INT: // TINY_INT
+	case i >= MIN_TINY_INT && i <= math.MaxInt8: // TINY_INT
 		return enc.encodeTinyInt(int(i))
 	}
 	return errors.New("invalid int64: this should not happen")
 }
 
 func (enc Encoder) encodeTinyInt(i int) error {
-	if i < MIN_TINY_INT || i > MAX_TINY_INT {
+	if i < MIN_TINY_INT || i > math.MaxInt8 {
 		return errors.New("encode tinyint: out of range")
 	}
 	b := byte(i)
@@ -243,7 +242,7 @@ func (enc Encoder) encodeTinyInt(i int) error {
 }
 
 func (enc Encoder) encodeInt8(i int) error {
-	if i < -128 || i > 127 {
+	if i < math.MinInt8 || i > math.MaxInt8 {
 		return errors.New("encode int8: out of range")
 	}
 	n, err := enc.bw.Write([]byte{INT_8, byte(i)})
@@ -258,7 +257,7 @@ func (enc Encoder) encodeInt8(i int) error {
 }
 
 func (enc Encoder) encodeInt16(i int) error {
-	if i < -32768 || i > 32767 {
+	if i < math.MinInt16 || i > math.MaxInt16 {
 		return errors.New("encode int16: out of range")
 	}
 	b := [3]byte{}
@@ -277,7 +276,7 @@ func (enc Encoder) encodeInt16(i int) error {
 }
 
 func (enc Encoder) encodeInt32(i int) error {
-	if i < -2147483648 || i > 2147483647 {
+	if i < math.MinInt32 || i > math.MaxInt32 {
 		return errors.New("encode int32: out of range")
 	}
 	b := [5]byte{}
