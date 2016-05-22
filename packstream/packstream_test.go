@@ -37,14 +37,14 @@ func (s *PackstreamSuite) TestDecodeBool(c *C) {
 		c.Fatal(err)
 	}
 
-	n, err := buf.Write([]byte{TRUE})
+	n, err := buf.Write([]byte{True})
 	c.Assert(err, IsNil)
 	c.Assert(n, Equals, 1)
 	v, err := decoder.Decode()
 	c.Assert(err, IsNil)
 	c.Assert(v, Equals, true)
 
-	n, err = buf.Write([]byte{FALSE})
+	n, err = buf.Write([]byte{False})
 	c.Assert(err, IsNil)
 	c.Assert(n, Equals, 1)
 	v, err = decoder.Decode()
