@@ -219,7 +219,7 @@ func (enc Encoder) encodeInt64(i int64) error {
 		return enc.encodeInt32(int(i))
 	case (i >= math.MinInt16 && i < math.MinInt8) || (i > math.MaxInt8 && i <= math.MaxInt16): // INT_16
 		return enc.encodeInt16(int(i))
-	case i >= math.MinInt8 && i < MIN_TINY_INT: // INT_8
+	case i >= math.MinInt8 && i < MinTinyInt: // INT_8
 		return enc.encodeInt8(int(i))
 	case i >= MinTinyInt && i <= MaxTinyInt: // TINY_INT
 		return enc.encodeTinyInt(int(i))
