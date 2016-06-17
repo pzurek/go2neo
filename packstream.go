@@ -137,18 +137,26 @@ func (dec Decoder) Decode() (interface{}, error) {
 	return nil, errors.New(fmt.Sprintf("decode: unsupported type: %x", b))
 }
 
-func (enc Encoder) Encode(v interface{}) error {
-	switch v.(type) {
-	case bool:
-		return enc.encodeBool(v.(bool))
-	case float64:
-		return enc.encodeFloat64(v.(float64))
-	case int64:
-		return enc.encodeInt64(v.(int64))
-	case int:
-		return enc.encodeInt64(int64(v.(int)))
+func (enc Encoder) Encode(values ...interface{}) error {
+	var err error
+	for _, v := range values {
+		switch v.(type) {
+		case bool:
+			err = enc.encodeBool(v.(bool))
+		case float64:
+			err = enc.encodeFloat64(v.(float64))
+		case int64:
+			err = enc.encodeInt64(v.(int64))
+		case int:
+			err = enc.encodeInt64(int64(v.(int)))
+		case string:
+			err = enc.encodeString(v.(string))
+		default:
+  		err = errors.New(fmt.Sprintf("unsupported type: %v", reflect.TypeOf(v)))
+		}
+		if err != nil { break }
 	}
-	return errors.New(fmt.Sprintf("unsupported type: %v", reflect.TypeOf(v)))
+	return err
 }
 
 func (enc Encoder) encodeBool(b bool) error {
@@ -296,4 +304,27 @@ func (enc Encoder) encodeInt32(i int) error {
 	}
 	enc.bw.Flush()
 	return err
+}
+
+func (enc Encoder) encodeString(s string) error {
+	length := len(s)
+	if length > 15 {
+		return errors.New("encode string: too long")
+	}
+	n, err := enc.bw.Write([]byte{0x80 + byte(length)})
+	if err != nil {
+		return err
+	}
+	if n != 1 {
+		return errors.New("not enough bytes written")
+	}
+	n, err = enc.bw.Write([]byte(s))
+	if err != nil {
+		return err
+	}
+	if n != length {
+		return errors.New("not enough bytes written")
+	}
+	enc.bw.Flush()
+	return nil
 }
