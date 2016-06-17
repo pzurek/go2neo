@@ -1,4 +1,4 @@
-package packstream
+package go2neo
 
 import (
 	"bufio"

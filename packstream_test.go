@@ -1,20 +1,16 @@
-package packstream
+package go2neo_test
 
 import (
 	"bytes"
 	"io/ioutil"
-	"testing"
 
+	. "github.com/nigelsmall/go2neo"
 	. "gopkg.in/check.v1"
 )
 
 type PackstreamSuite struct{}
 
 var _ = Suite(&PackstreamSuite{})
-
-func Test(t *testing.T) {
-	TestingT(t)
-}
 
 func (s *PackstreamSuite) TestEncodeBool(c *C) {
 	buf := &bytes.Buffer{}
