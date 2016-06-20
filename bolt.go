@@ -90,7 +90,7 @@ func (d *Driver) handshake() error {
 
 func (d *Driver) init(userAgent string, user string, password string) error {
 	d.writeBuffer.Reset()
-	d.writeBuffer.Write([]byte{0xB2, INIT})
+	d.writeBuffer.Write([]byte{0xB2, Init})
 	err := d.packer.Encode(userAgent)
 	if err != nil {
 		return err
