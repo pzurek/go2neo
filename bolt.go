@@ -62,11 +62,15 @@ func (d *Driver) recvRaw(size uint16) error {
 
 func (d *Driver) recv() (int, error) {
 	err := d.recvRaw(2)
-	if err != nil { return -1, err }
+	if err != nil {
+		return -1, err
+	}
 	chunkSize := (int)(d.readBuffer[0]<<8 | d.readBuffer[1])
 	if chunkSize > 0 {
 		err := d.recvRaw(uint16(chunkSize))
-		if err != nil { return -1, err }
+		if err != nil {
+			return -1, err
+		}
 	}
 	return chunkSize, nil
 }
@@ -88,21 +92,30 @@ func (d *Driver) init(userAgent string, user string, password string) error {
 	d.writeBuffer.Reset()
 	d.writeBuffer.Write([]byte{0xB2, INIT})
 	err := d.packer.Encode(userAgent)
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 	d.writeBuffer.Write([]byte{0xA3})
 	err = d.packer.Encode("scheme", "basic", "principal", user, "credentials", password)
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 	err = d.send()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 	more := true
 	for more {
 		size, err := d.recv()
-  	if err != nil { return err }
-		if (size == 0) {
+		if err != nil {
+			return err
+		}
+
+		if size == 0 {
 			more = false
 		} else {
 			// TODO: use the return value
-  		print(d.readBuffer[0:size])
+			print(d.readBuffer[0:size])
 		}
 	}
 	return nil
@@ -123,7 +136,7 @@ func NewDriver(address string) (*Driver, error) {
 		return nil, err
 	}
 
-  err = d.handshake()
+	err = d.handshake()
 	if err != nil {
 		return nil, err
 	}
