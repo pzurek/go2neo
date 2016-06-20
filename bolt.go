@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	INIT = 0x01
+	Init = 0x01
 )
 
 var (
