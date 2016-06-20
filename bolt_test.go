@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "github.com/nigelsmall/go2neo"
-  . "gopkg.in/check.v1"
+	. "gopkg.in/check.v1"
 )
 
 type driverSuite struct{}

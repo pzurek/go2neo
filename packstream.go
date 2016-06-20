@@ -152,9 +152,11 @@ func (enc Encoder) Encode(values ...interface{}) error {
 		case string:
 			err = enc.encodeString(v.(string))
 		default:
-  		err = errors.New(fmt.Sprintf("unsupported type: %v", reflect.TypeOf(v)))
+			err = errors.New(fmt.Sprintf("unsupported type: %v", reflect.TypeOf(v)))
 		}
-		if err != nil { break }
+		if err != nil {
+			break
+		}
 	}
 	return err
 }
